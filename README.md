@@ -19,5 +19,3 @@ Your mission is to find and fix the issues, and make the app gloriously performa
 See /LICENSE for more.
 
 This is not a Google product.
-
-test
