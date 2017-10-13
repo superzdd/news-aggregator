@@ -32,6 +32,9 @@ APP.Main = (function() {
 			}
 		}
 	};
+	var storyDetails = document.createElement('section');
+	storyDetails.classList.add('story-details');
+	document.body.appendChild(storyDetails);
 
 	var tmplStory = $('#tmpl-story').textContent;
 	var tmplStoryDetails = $('#tmpl-story-details').textContent;
@@ -62,28 +65,8 @@ APP.Main = (function() {
 	 * probably in a requestAnimationFrame callback.
 	 */
 	function onStoryData(key, details) {
-
 		// This seems odd. Surely we could just select the story
 		// directly rather than looping through all of them.
-		//		var storyElements = document.querySelectorAll('.story');
-		//
-		//		for(var i = 0; i < storyElements.length; i++) {
-		//
-		//			if(storyElements[i].getAttribute('id') === 's-' + key) {
-		//
-		//				details.time *= 1000;
-		//				var story = storyElements[i];
-		//				var html = storyTemplate(details);
-		//				story.innerHTML = html;
-		//				story.addEventListener('click', onStoryClick.bind(this, details));
-		//				story.classList.add('clickable');
-		//
-		//				// Tick down. When zero we can batch in the next load.
-		//				storyLoadCount--;
-		//
-		//			}
-		//		}
-
 		var story = document.getElementById('s-' + key);
 		if(!!story) {
 			details.time *= 1000;
@@ -98,23 +81,23 @@ APP.Main = (function() {
 		}
 
 		// Colorize on complete.
-		if(storyLoadCount === 0)
-			colorizeAndScaleStories();
+		// if(storyLoadCount === 0)
+		//  colorizeAndScaleStories();
 	}
 
 	function onStoryClick(details) {
 
-		var storyDetails = $('#sd-' + details.id);
+//		var storyDetails = $('#sd-' + details.id);
 		var mainPosition = main.getBoundingClientRect(); // 测量当前main容器的尺寸，传入动画中，避免每次计算
 		// Wait a little time then show the story details.
-//		setTimeout(showStory.bind(this, details.id, mainPosition), 60);
+		//		setTimeout(showStory.bind(this, details.id, mainPosition), 60);
 
 		// Create and append the story. A visual change...
 		// perhaps that should be in a requestAnimationFrame?
 		// And maybe, since they're all the same, I don't
 		// need to make a new element every single time? I mean,
 		// it inflates the DOM and I can only see one at once.
-		if(!storyDetails) {
+//		if(!storyDetails) {
 
 			if(details.url)
 				details.urlobj = new URL(details.url);
@@ -131,12 +114,12 @@ APP.Main = (function() {
 				text: 'Loading comment...'
 			});
 
-			storyDetails = document.createElement('section');
+//			storyDetails = document.createElement('section');
 			storyDetails.setAttribute('id', 'sd-' + details.id);
-			storyDetails.classList.add('story-details');
+//			storyDetails.classList.add('story-details');
 			storyDetails.innerHTML = storyDetailsHtml;
 
-			document.body.appendChild(storyDetails);
+//			document.body.appendChild(storyDetails);
 
 			commentsElement = storyDetails.querySelector('.js-comments');
 			storyHeader = storyDetails.querySelector('.js-header');
@@ -171,10 +154,10 @@ APP.Main = (function() {
 						localeData);
 				});
 			}
-		}
-	
-//		showStory.bind(this, details.id, mainPosition);
-		showStory(details.id,mainPosition);
+//		}
+
+		//		showStory.bind(this, details.id, mainPosition);
+		showStory(details.id, mainPosition);
 	}
 
 	function generateStoryDetail(details) {
@@ -238,10 +221,10 @@ APP.Main = (function() {
 
 	function showStory(id, mainPosition) {
 
-//		if(inDetails)
-//			return;
-//
-//		inDetails = true;
+		//		if(inDetails)
+		//			return;
+		//
+		//		inDetails = true;
 
 		var storyDetails = $('#sd-' + id);
 		var left = null;
@@ -257,222 +240,51 @@ APP.Main = (function() {
 		// getBoundingClientRect 方法都移动到循环外执行
 		// 动画执行过程中的left属性使用translastX代替
 
-//		var lastAnimationTime = 0
-//		//		var mainPosition = main.getBoundingClientRect();
-//		//		var storyDetailsPosition = storyDetails.getBoundingClientRect();
-//		//		var target = mainPosition.width + 100;
-//		var orgLeft = mainPosition.width;
-//		left = 0;
-//
-//		function animate() {
-//			var currentTime = Date.now();
-//			if(currentTime - lastAnimationTime < 4) {
-//				return;
-//			}
-//			lastAnimationTime = currentTime;
-//
-//			left += ((orgLeft - left) * 0.1);
-//
-//			// Set up the next bit of the animation if there is more to do.
-//			if(left < (orgLeft - 0.5)) {
-//				requestAnimationFrame(animate); // setTimeout(animate, 4);
-//			} else {
-//				storyDetails.style.transform = 'translateX(' + (-orgLeft) + 'px)'; // left = 0;
-//				return;
-//			}
-//
-//			// And update the styles. Wait, is this a read-write cycle?
-//			// I hope I don't trigger a forced synchronous layout!
-//			storyDetails.style.transform = 'translateX(' + (-left) + 'px)'; // storyDetails.style.left = left + 'px';
-//		}
-//
-//		// We want slick, right, so let's do a setTimeout
-//		// every few milliseconds. That's going to keep
-//		// it all tight. Or maybe we're doing visual changes
-//		// and they should be in a requestAnimationFrame
-//		requestAnimationFrame(animate); // setTimeout(animate, 4);
+		//		var lastAnimationTime = 0
+		//		//		var mainPosition = main.getBoundingClientRect();
+		//		//		var storyDetailsPosition = storyDetails.getBoundingClientRect();
+		//		//		var target = mainPosition.width + 100;
+		//		var orgLeft = mainPosition.width;
+		//		left = 0;
+		//
+		//		function animate() {
+		//			var currentTime = Date.now();
+		//			if(currentTime - lastAnimationTime < 4) {
+		//				return;
+		//			}
+		//			lastAnimationTime = currentTime;
+		//
+		//			left += ((orgLeft - left) * 0.1);
+		//
+		//			// Set up the next bit of the animation if there is more to do.
+		//			if(left < (orgLeft - 0.5)) {
+		//				requestAnimationFrame(animate); // setTimeout(animate, 4);
+		//			} else {
+		//				storyDetails.style.transform = 'translateX(' + (-orgLeft) + 'px)'; // left = 0;
+		//				return;
+		//			}
+		//
+		//			// And update the styles. Wait, is this a read-write cycle?
+		//			// I hope I don't trigger a forced synchronous layout!
+		//			storyDetails.style.transform = 'translateX(' + (-left) + 'px)'; // storyDetails.style.left = left + 'px';
+		//		}
+		//
+		//		// We want slick, right, so let's do a setTimeout
+		//		// every few milliseconds. That's going to keep
+		//		// it all tight. Or maybe we're doing visual changes
+		//		// and they should be in a requestAnimationFrame
+		//		requestAnimationFrame(animate); // setTimeout(animate, 4);
 	}
-
-	//	function showStory(id) {
-	//
-	//		if(inDetails)
-	//			return;
-	//
-	//		inDetails = true;
-	//
-	//		var storyDetails = $('#sd-' + id);
-	//		var left = null;
-	//
-	//		if(!storyDetails)
-	//			return;
-	//
-	//		document.body.classList.add('details-active');
-	//		storyDetails.style.opacity = 1;
-	//
-	//		function animate() {
-	//
-	//			// Find out where it currently is.
-	//			var storyDetailsPosition = storyDetails.getBoundingClientRect();
-	//
-	//			// Set the left value if we don't have one already.
-	//			if(left === null)
-	//				left = storyDetailsPosition.left;
-	//
-	//			// Now figure out where it needs to go.
-	//			left += (0 - storyDetailsPosition.left) * 0.1;
-	//
-	//			// Set up the next bit of the animation if there is more to do.
-	//			if(Math.abs(left) > 0.5)
-	//				setTimeout(animate, 4);
-	//			else
-	//				left = 0;
-	//
-	//			// And update the styles. Wait, is this a read-write cycle?
-	//			// I hope I don't trigger a forced synchronous layout!
-	//			storyDetails.style.left = left + 'px';
-	//		}
-	//
-	//		// We want slick, right, so let's do a setTimeout
-	//		// every few milliseconds. That's going to keep
-	//		// it all tight. Or maybe we're doing visual changes
-	//		// and they should be in a requestAnimationFrame
-	//		setTimeout(animate, 4);
-	//	}
-
+	
 	function hideStory(id) {
-		// 动画优化方法
-		// 将setTimeout改为requestAnimationFrame
-		// getBoundingClientRect 方法都移动到循环外执行
-		// 动画执行过程中的left属性使用translastX代替
-
-//		if(!inDetails)
-//			return;
-
-		var storyDetails = $('#sd-' + id);
-		var left = 0;
-
 		storyDetails.classList.remove('details-active');
 		storyDetails.style.opacity = 0;
-
-		var lastAnimationTime = 0
-		//		var mainPosition = main.getBoundingClientRect();
-		var storyDetailsPosition = storyDetails.getBoundingClientRect();
-		var target = parseInt(storyDetails.style.transform.replace(/translateX\(/, '').replace(/px\)/, '')) * -1; //mainPosition.width + 100;
-		//		var orgLeft = storyDetailsPosition.left;
-		left = 0; // storyDetailsPosition.left;
-
-//		function animate() {
-//			var currentTime = Date.now();
-//			if(currentTime - lastAnimationTime < 4) {
-//				return;
-//			}
-//			lastAnimationTime = currentTime;
-//
-//			// Now figure out where it needs to go.
-//			left += (target - left) * 0.1;
-//
-//			// Set up the next bit of the animation if there is more to do.
-//			if(left <= (target - 0.5)) { // if(Math.abs(left - target) > 0.5) {
-//				//				setTimeout(animate, 4);
-//				requestAnimationFrame(animate);
-//			} else {
-//				//				left = target;
-//				storyDetails.style.transform = 'translateX(' + left + 'px)';
-//				inDetails = false;
-//				return;
-//			}
-//
-//			// And update the styles. Wait, is this a read-write cycle?
-//			// I hope I don't trigger a forced synchronous layout!
-//			storyDetails.style.transform = 'translateX(' + (left - target) + 'px)';
-//		}
-//
-//		// We want slick, right, so let's do a setTimeout
-//		// every few milliseconds. That's going to keep
-//		// it all tight. Or maybe we're doing visual changes
-//		// and they should be in a requestAnimationFrame
-//		//		setTimeout(animate, 4);
-//		requestAnimationFrame(animate);
 	}
-
-	//	function hideStory(id) {
-	//
-	//		if(!inDetails)
-	//			return;
-	//
-	//		var storyDetails = $('#sd-' + id);
-	//		var left = 0;
-	//
-	//		document.body.classList.remove('details-active');
-	//		storyDetails.style.opacity = 0;
-	//
-	//		function animate() {
-	//
-	//			// Find out where it currently is.
-	//			var mainPosition = main.getBoundingClientRect();
-	//			var storyDetailsPosition = storyDetails.getBoundingClientRect();
-	//			var target = mainPosition.width + 100;
-	//
-	//			// Now figure out where it needs to go.
-	//			left += (target - storyDetailsPosition.left) * 0.1;
-	//
-	//			// Set up the next bit of the animation if there is more to do.
-	//			if(Math.abs(left - target) > 0.5) {
-	//				setTimeout(animate, 4);
-	//			} else {
-	//				left = target;
-	//				inDetails = false;
-	//			}
-	//
-	//			// And update the styles. Wait, is this a read-write cycle?
-	//			// I hope I don't trigger a forced synchronous layout!
-	//			storyDetails.style.left = left + 'px';
-	//		}
-	//
-	//		// We want slick, right, so let's do a setTimeout
-	//		// every few milliseconds. That's going to keep
-	//		// it all tight. Or maybe we're doing visual changes
-	//		// and they should be in a requestAnimationFrame
-	//		setTimeout(animate, 4);
-	//	}
 
 	/**
 	 * Does this really add anything? Can we do this kind
 	 * of work in a cheaper way?
 	 */
-	//function colorizeAndScaleStories() {
-	//
-	//  var storyElements = document.querySelectorAll('.story');
-	//
-	//  // It does seem awfully broad to change all the
-	//  // colors every time!
-	//  for (var s = 0; s < storyElements.length; s++) {
-	//
-	//    var story = storyElements[s];
-	//    var score = story.querySelector('.story__score');
-	//    var title = story.querySelector('.story__title');
-	//
-	//    // Base the scale on the y position of the score.
-	//    var height = main.offsetHeight;
-	//    var mainPosition = main.getBoundingClientRect();
-	//    var scoreLocation = score.getBoundingClientRect().top -
-	//        document.body.getBoundingClientRect().top;
-	//    var scale = Math.min(1, 1 - (0.05 * ((scoreLocation - 170) / height)));
-	//    var opacity = Math.min(1, 1 - (0.5 * ((scoreLocation - 170) / height)));
-	//
-	//    score.style.width = (scale * 40) + 'px';
-	//    score.style.height = (scale * 40) + 'px';
-	//    score.style.lineHeight = (scale * 40) + 'px';
-	//
-	//    // Now figure out how wide it is and use that to saturate it.
-	//    scoreLocation = score.getBoundingClientRect();
-	//    var saturation = (100 * ((scoreLocation.width - 38) / 2));
-	//
-	//    score.style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
-	//    title.style.opacity = opacity;
-	//  }
-	//}
-
 	function colorizeAndScaleStories() {
 
 		var storyElements = document.querySelectorAll('.story');
@@ -494,21 +306,21 @@ APP.Main = (function() {
 			storyElementsPosition.push(position);
 		}
 
-//		storyElements.forEach(function(item) {
-//			storyElementsPosition.push(item.querySelector('.story__score').getBoundingClientRect());
-//		});
+		//		storyElements.forEach(function(item) {
+		//			storyElementsPosition.push(item.querySelector('.story__score').getBoundingClientRect());
+		//		});
 
 		// It does seem awfully broad to change all the
 		// colors every time!
 		for(var s = 0; s < storyElementsInScreen.length; s++) {
 			var scorePosition = storyElementsPosition[s];
-//			if(scorePosition.top <= -50) {
-//				continue;
-//			}
-//
-//			if(scorePosition.top >= mainHeight) {
-//				break;
-//			}
+			//			if(scorePosition.top <= -50) {
+			//				continue;
+			//			}
+			//
+			//			if(scorePosition.top >= mainHeight) {
+			//				break;
+			//			}
 
 			var story = storyElementsInScreen[s];
 			var score = story.querySelector('.story__score');
@@ -517,48 +329,48 @@ APP.Main = (function() {
 
 			// Base the scale on the y position of the score.
 
-			//    var height = main.offsetHeight;
+			// var height = main.offsetHeight;
 			var height = mainHeight;
 
-			//    var mainPosition = main.getBoundingClientRect();
+			// var mainPosition = main.getBoundingClientRect();
 
-			//    var scoreLocation = score.getBoundingClientRect().top -
-			//        document.body.getBoundingClientRect().top;
+			// var scoreLocation = score.getBoundingClientRect().top -
+			// 	document.body.getBoundingClientRect().top;
 			var scoreLocation = scorePosition.top - bodyPosition.top;
 
 			var scale = Math.min(1, 1 - (0.05 * ((scoreLocation - 170) / height)));
 			var opacity = Math.min(1, 1 - (0.5 * ((scoreLocation - 170) / height)));
 
-			score.style.width = (scale * 40) + 'px';
-			score.style.height = (scale * 40) + 'px';
-			score.style.lineHeight = (scale * 40) + 'px';
-
 			// Now figure out how wide it is and use that to saturate it.
-			//			scoreLocation = score.getBoundingClientRect();
+			// scoreLocation = score.getBoundingClientRect();
 
-			//			var saturation = (100 * ((scoreLocation.width - 38) / 2));
+			// var saturation = (100 * ((scoreLocation.width - 38) / 2));
 			var saturation = (100 * ((scorePosition.width - 38) / 2));
 
 			score.style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
+			// score.style.width = (scale * 40) + 'px';
+			// score.style.height = (scale * 40) + 'px';
+			// score.style.lineHeight = (scale * 40) + 'px';
+			score.style.transform = "scale(" + scale + ")";
 			title.style.opacity = opacity;
 		}
 	}
 
-//	main.addEventListener('touchstart', function(evt) {
-//
-//		// I just wanted to test what happens if touchstart
-//		// gets canceled. Hope it doesn't block scrolling on mobiles...
-//		if(Math.random() > 0.97) {
-//			evt.preventDefault();
-//		}
-//
-//	});
+	//	main.addEventListener('touchstart', function(evt) {
+	//
+	//		// I just wanted to test what happens if touchstart
+	//		// gets canceled. Hope it doesn't block scrolling on mobiles...
+	//		if(Math.random() > 0.97) {
+	//			evt.preventDefault();
+	//		}
+	//
+	//	});
 
 	main.addEventListener('scroll', function() {
-
+		var mainScrollTop = main.scrollTop;
 		var header = $('header');
 		var headerTitles = header.querySelector('.header__title-wrapper');
-		var scrollTopCapped = Math.min(70, main.scrollTop);
+		var scrollTopCapped = Math.min(70, mainScrollTop);
 		var scaleStringHeader = 'scale(' + (1 - (scrollTopCapped / 156)) + ')';
 		var scaleString = 'scale(' + (1 - (scrollTopCapped / 300)) + ')';
 
@@ -589,8 +401,9 @@ APP.Main = (function() {
 		// Check if we need to load the next batch of stories.
 		var loadThreshold = (main.scrollHeight - main.offsetHeight -
 			LAZY_LOAD_THRESHOLD);
-		if(main.scrollTop > loadThreshold)
+		if(mainScrollTop > loadThreshold) {
 			loadStoryBatch();
+		}
 	});
 
 	function loadStoryBatch() {

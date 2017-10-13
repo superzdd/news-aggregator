@@ -94,8 +94,8 @@ a {
 	opacity: 0.54;
 }
 
-.story-details.details-active{
-	left: 0;
+.story-details.details-active {
+	transform: translateX(-100%);
 }
 
 body.details-active .story__title,
